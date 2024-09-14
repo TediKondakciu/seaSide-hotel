@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-spring-app-deployment
+  labels:
+    app: {{ .Release.Name }}-spring-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-spring-app
+  template:
+    metadata:
+      name: spring-app-pod
+      labels:
+        app: {{ .Release.Name }}-spring-app
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-spring-app-container
+          image: {{ .Values.springApp.image.repository }}:{{ .Values.springApp.image.tag}}
+          imagePullPolicy: {{ .Values.springApp.image.pullPolicy }}
+          ports:
+            - containerPort: 9192
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: {{ include "spring-app.MySQLConnectionURL" . | quote }}
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mysql-username
+                  key: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mysql-root-password
+                  key: password

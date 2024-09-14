@@ -1,0 +1,33 @@
+replicaCount: 1
+
+mysql:
+  databaseName: seaSide_hotel_db
+
+springApp:
+  image:
+    repository: seaside-hotel
+    pullPolicy: IfNotPresent
+    tag: latest
+
+mysqlVolume:
+  persistentVolumeClaim:
+    storageSize: 500Mi
+
+  persistentVolume:
+    storageSize: 500Mi
+    pathOnHost: /var/lib/mysql
+
+  mountPath: /var/lib/mysql
+
+ingress:
+  enabled: true
+  name: ""
+  annotations: { }
+  hosts:
+    - host: seaside-hotel.com
+      paths:
+        - path: /
+          pathType: Prefix
+          serviceName: spring-app-service
+          port: 8080
+  tls: [ ]
