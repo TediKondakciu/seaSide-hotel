@@ -1,7 +1,7 @@
 package com.springbootproject.seasidehotel.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -15,8 +15,9 @@ import java.util.HashSet;
  * @author Tedi Kondakçiu
  */
 
-@ApiModel(description = "User is an abstract entity that describes the common set of information that a concrete user must enter to register.")
+@Schema(description = "User is an abstract entity that describes the common set of information that a concrete user must enter to register.")
 @Entity
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -2,34 +2,41 @@ package com.springbootproject.seasidehotel.api;
 
 import com.springbootproject.seasidehotel.model.Booking;
 import com.springbootproject.seasidehotel.response.BookingResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Validated
-@Api(value = "booking")
 @RequestMapping(value = "/bookings")
 public interface BookingApi {
 
-    @ApiOperation(value = "Gets Booking objects", nickname = "getAllBookings", notes = "This operation gets all Booking entities", response = BookingResponse.class, responseContainer = "List")
+    @Operation(summary = "Gets Booking objects", operationId = "getAllBookings", description = "This operation gets all Booking entities")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = BookingResponse.class))))})
     @RequestMapping(value = "all-bookings", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     ResponseEntity<List<BookingResponse>> getAllBookings();
 
-    @ApiOperation(value = "Gets a Booking", nickname = "getBookingByConfirmationCode", notes = "This operation gets a Booking entity by its email.", response = BookingResponse.class)
+    @Operation(summary = "Gets a Booking", operationId = "getBookingByConfirmationCode", description = "This operation gets a Booking entity by its email.")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = BookingResponse.class)))})
     @RequestMapping(value = "/confirmation/{confirmationCode}", method = RequestMethod.GET)
-    ResponseEntity<?> getBookingByConfirmationCode(@ApiParam(value = "Confirmation code of the Booking", required = true) @PathVariable String confirmationCode);
+    ResponseEntity<?> getBookingByConfirmationCode(@Parameter(description = "Confirmation code of the Booking", required = true) @PathVariable String confirmationCode);
 
-    @ApiOperation(value = "Saves a Booking", nickname = "saveBooking", notes = "This operation saves a Booking entity.", response = String.class)
+    @Operation(summary = "Saves a Booking", operationId = "saveBooking", description = "This operation saves a Booking entity.")
     @RequestMapping(value = "/room/{roomId}/booking", method = RequestMethod.POST)
-    ResponseEntity<?> saveBooking(@ApiParam(value = "Identifier of the Room", required = true) @PathVariable Long roomId, @ApiParam(value = "The Booking to be created", required = true) @Valid @RequestBody Booking bookingRequest);
+    ResponseEntity<?> saveBooking(@Parameter(description = "Identifier of the Room", required = true) @PathVariable Long roomId, @Parameter(description = "The Booking to be created", required = true) @Valid @RequestBody Booking bookingRequest);
 
-    @ApiOperation(value = "Cancels a Booking", nickname = "cancelBooking", notes = "This operation cancels a Booking entity by its identification.")
+    @Operation(summary = "Cancels a Booking", operationId = "cancelBooking", description = "This operation cancels a Booking entity by its identification.")
     @RequestMapping(value = "/booking/{bookingId}/delete", method = RequestMethod.DELETE)
-    void cancelBooking(@ApiParam(value = "Identifier of the Booking", required = true) @PathVariable Long bookingId);
+    void cancelBooking(@Parameter(description = "Identifier of the Booking", required = true) @PathVariable Long bookingId);
 }

@@ -1,6 +1,6 @@
 package com.springbootproject.seasidehotel.model;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author Tedi Kondakçiu
  */
 
-@ApiModel(description = "Room is an abstract entity that describes the common set of properties that a concrete room has.")
+@Schema(description = "Room is an abstract entity that describes the common set of properties that a concrete room has.")
 @Entity
 @Getter
 @Setter

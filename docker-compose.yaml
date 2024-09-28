@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: seaside-hotel:latest
+    image: seaside-hotel:1.1.0
     container_name: seaside-hotel-container
     depends_on:
       - mysql

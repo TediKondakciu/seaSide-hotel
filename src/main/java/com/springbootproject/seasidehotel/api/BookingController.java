@@ -8,7 +8,7 @@ import com.springbootproject.seasidehotel.response.BookingResponse;
 import com.springbootproject.seasidehotel.response.RoomResponse;
 import com.springbootproject.seasidehotel.service.IBookingService;
 import com.springbootproject.seasidehotel.service.IRoomService;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,7 +46,7 @@ public class BookingController {
     }
 
     @GetMapping("/confirmation/{confirmationCode}")
-    public ResponseEntity<?> getBookingByConfirmationCode(@ApiParam(value = "Confirmation code of the Booking", required = true) @PathVariable String confirmationCode){
+    public ResponseEntity<?> getBookingByConfirmationCode(@Parameter(description = "Confirmation code of the Booking", required = true) @PathVariable String confirmationCode){
         try{
             Booking booking = bookingService.findByBookingConfirmationCode(confirmationCode);
             BookingResponse bookingResponse = getBookingResponse(booking);
@@ -57,7 +57,7 @@ public class BookingController {
     }
 
     @PostMapping("/room/{roomId}/booking")
-    public ResponseEntity<?> saveBooking(@ApiParam(value = "Identifier of the Room", required = true) @PathVariable Long roomId, @ApiParam(value = "The Booking to be created", required = true) @Valid @RequestBody Booking bookingRequest){
+    public ResponseEntity<?> saveBooking(@Parameter(description = "Identifier of the Room", required = true) @PathVariable Long roomId, @Parameter(description = "The Booking to be created", required = true) @Valid @RequestBody Booking bookingRequest){
         try{
             String confirmationCode = bookingService.saveBooking(roomId, bookingRequest);
             return new ResponseEntity<>("Room booked successfully! Your booking confirmation code is: " + confirmationCode, HttpStatus.OK);
@@ -67,7 +67,7 @@ public class BookingController {
     }
 
     @DeleteMapping("/booking/{bookingId}/delete")
-    public void cancelBooking(@ApiParam(value = "Identifier of the Booking", required = true) @PathVariable Long bookingId){
+    public void cancelBooking(@Parameter(description = "Identifier of the Booking", required = true) @PathVariable Long bookingId){
         bookingService.cancelBooking(bookingId);
     }
 

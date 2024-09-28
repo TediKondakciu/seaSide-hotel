@@ -1,7 +1,7 @@
 package com.springbootproject.seasidehotel.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author Tedi Kondakçiu
  */
 
-@ApiModel(description = "Role is an abstract entity that defines the level of access and permissions that all concrete users have.")
+@Schema(description = "Role is an abstract entity that defines the level of access and permissions that all concrete users have.")
 @Entity
 @Getter
 @Setter

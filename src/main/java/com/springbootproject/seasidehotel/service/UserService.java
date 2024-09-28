@@ -7,6 +7,7 @@ import com.springbootproject.seasidehotel.model.User;
 import com.springbootproject.seasidehotel.repository.RoleRepository;
 import com.springbootproject.seasidehotel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,16 +23,19 @@ import java.util.List;
 public class UserService implements IUserService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository){
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
     @Override
     public User registerUser(User user) {
         if(userRepository.existsByEmail(user.getEmail()))
-            throw new UserAlreadyExistsException(user.getEmail() + "already exists!");
+            throw new UserAlreadyExistsException(user.getEmail() + " already exists!");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role roleUser = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(Collections.singletonList(roleUser));
         return userRepository.save(user);

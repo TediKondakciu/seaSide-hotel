@@ -1,6 +1,6 @@
 package com.springbootproject.seasidehotel.model;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,13 @@ import lombok.Setter;
 
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * @author Tedi Kondakçiu
  */
 
-@ApiModel(description = "Booking is an abstract entity that describes the common set of properties in order to book a room.")
+@Schema(description = "Booking is an abstract entity that describes the common set of properties in order to book a room.")
 @Entity
 @Getter
 @Setter
@@ -74,10 +75,4 @@ public class Booking {
         this.numOfChildren = numOfChildren;
         calculateTotalGuests();
     }
-
-    /*
-    public void setBookingConfirmationCode(String bookingConfirmationCode) {
-       this.bookingConfirmationCode = bookingConfirmationCode;
-    }
-     */
 }

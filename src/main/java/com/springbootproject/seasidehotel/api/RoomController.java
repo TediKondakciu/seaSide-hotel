@@ -8,7 +8,7 @@ import com.springbootproject.seasidehotel.response.BookingResponse;
 import com.springbootproject.seasidehotel.response.RoomResponse;
 import com.springbootproject.seasidehotel.service.IBookingService;
 import com.springbootproject.seasidehotel.service.IRoomService;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -44,9 +44,9 @@ public class RoomController implements RoomApi{
     }
 
     @Override
-    public ResponseEntity<RoomResponse> addNewRoom(@ApiParam(value = "Photo of the Room") @RequestParam("photo") MultipartFile photo,
-                                                   @ApiParam(value = "Type of the Room") @Valid @RequestParam("roomType") String roomType,
-                                                   @ApiParam(value = "Price of the Room") @Valid @RequestParam("roomPrice") BigDecimal roomPrice) throws SQLException, IOException {
+    public ResponseEntity<RoomResponse> addNewRoom(@Parameter(description = "Photo of the Room") @RequestParam("photo") MultipartFile photo,
+                                                   @Parameter(description = "Type of the Room") @Valid @RequestParam("roomType") String roomType,
+                                                   @Parameter(description = "Price of the Room") @Valid @RequestParam("roomPrice") BigDecimal roomPrice) throws SQLException, IOException {
         Room savedRoom = roomService.addNewRoom(photo, roomType, roomPrice);
         RoomResponse response = new RoomResponse(savedRoom.getId(), savedRoom.getRoomType(), savedRoom.getRoomPrice());
         return new ResponseEntity<>(response, HttpStatus.OK);
