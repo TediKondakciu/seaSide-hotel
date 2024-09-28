@@ -1,6 +1,8 @@
 # Hotel Booking Web App
 
-A simple hotel booking web application built using Java and Spring Boot, connected to a MySQL database. The application is containerized using Docker and deployed on a Kubernetes cluster with Minikube. It features Helm for Kubernetes configuration and uses a custom domain name (seaside-hotel.com) configured through an Ingress service.
+A simple hotel booking web application built using Java and Spring Boot, connected to a MySQL database. The application is containerized using Docker and deployed on a Kubernetes cluster with Minikube. 
+It features Helm for Kubernetes configuration and uses a custom domain name (seaside-hotel.com) configured through an Ingress service.
+
 
 ## Table of Contents
 
@@ -19,6 +21,7 @@ A simple hotel booking web application built using Java and Spring Boot, connect
 - **User Authentication and Authorization**: Implemented login functionality with role-based access control.
 - **OpenAPI Documentation**: API documentation available at [http://localhost:9192/swagger-ui/index.html](http://localhost:9192/swagger-ui/index.html) (accessible when the server is running).
 - **Unit Testing**: Comprehensive unit tests for all repository and service layers to ensure functionality and reliability.
+
 
 ## Prerequisites
 
